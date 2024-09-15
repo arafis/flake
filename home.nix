@@ -19,17 +19,23 @@
     vim
     unrar
     unzip
+    gh
   ];
 
   # Import your i3 and i3status configurations
   xdg.configFile = {
-    "i3/config" = lib.mkDefault {
+    "i3/config" = lib.mkForce {
       source = ./dotfiles/i3config;
     };
-    "i3status/config" = lib.mkDefault {
+    "i3status/config" = lib.mkForce {
       source = ./dotfiles/i3statusconfig;
     };
   };
+
+#  home.file = {
+#    ".config/i3/config".source = ./dotfiles/i3config;
+#    ".config/i3status/config".source = ./dotfiles/i3status;
+#  };
 
   # Enable i3 in Home Manager
   xsession.windowManager.i3 = {
@@ -42,4 +48,5 @@
 
   # Don't forget this line at the end:
   home.stateVersion = "24.05";
+  programs.home-manager.enable = true;
 }

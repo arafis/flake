@@ -6,13 +6,10 @@
   ];
 
   # Boot loader configuration
-  boot.loader.grub = {
-    enable = true;
-    devices = [ "/dev/vda1" ]; # Replace with your actual boot device
-    efiSupport = true;
-    efiInstallAsRemovable = true;
-  };
-  boot.loader.efi.canTouchEfiVariables = false;
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
 
   networking = {
@@ -26,21 +23,7 @@
   };
 
   time.timeZone = "Asia/Jakarta";
-  i18n = {
-    defaultLocale = "en_ID";
-    extraLocaleSettings = {
-      LC_ADDRESS = "en_ID";
-      LC_IDENTIFICATION = "en_ID";
-      LC_MEASUREMENT = "en_ID";
-      LC_MONETARY = "en_ID";
-      LC_NAME = "en_ID";
-      LC_NUMERIC = "en_ID";
-      LC_PAPER = "en_ID";
-      LC_TELEPHONE = "en_ID";
-      LC_TIME = "en_ID";
-      LC_CTYPE="en_US.utf8";
-    };
-  };
+  i18n.defaultLocale = "en_US.UTF-8";
 
   sound.enable = true;
 
@@ -94,6 +77,7 @@
     gnome.gnome-keyring
     polkit_gnome
     pulseaudioFull
+    spice-vdagent
   ];
 
   programs = {
