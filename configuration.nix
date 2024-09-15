@@ -29,8 +29,6 @@
 
   services = {
     xserver = {
-      layout = "us";
-      xkbVariant = "";
       enable = true;
       windowManager.i3.enable = true;
       desktopManager = {
@@ -45,7 +43,12 @@
         lightdm.enable = true;
         defaultSession = "xfce+i3";
       };
+      xkb = {
+        layout = "us";
+        xkbVariant = "";
+      };
     };
+    spice-vdagentd.enable = true; # Qemu vm clipboard share
     gvfs.enable = true;
     gnome.gnome-keyring.enable = true;
     blueman.enable = true;
