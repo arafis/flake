@@ -45,7 +45,7 @@
       };
       xkb = {
         layout = "us";
-        xkbVariant = "";
+        variant = "";
       };
     };
     spice-vdagentd.enable = true; # Qemu vm clipboard share
