@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   home.username = "foxane";
@@ -23,8 +23,12 @@
 
   # Import your i3 and i3status configurations
   xdg.configFile = {
-    "i3/config".source = ./dotfiles/i3config;
-    "i3status/config".source = ./dotfiles/i3statusconfig;
+    "i3/config" = lib.mkDefault {
+      source = ./dotfiles/i3config;
+    };
+    "i3status/config" = lib.mkDefault {
+      source = ./dotfiles/i3statusconfig;
+    };
   };
 
   # Enable i3 in Home Manager
