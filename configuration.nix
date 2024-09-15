@@ -5,7 +5,15 @@
     ./hardware.nix
   ];
 
-  # paste your boot config here...
+  # Boot loader configuration
+  boot.loader.grub = {
+    enable = true;
+    devices = [ "/dev/vda1" ]; # Replace with your actual boot device
+    efiSupport = true;
+    efiInstallAsRemovable = true;
+  };
+  boot.loader.efi.canTouchEfiVariables = false;
+
 
   networking = {
     firewall = {

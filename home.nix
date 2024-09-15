@@ -22,9 +22,9 @@
   ];
 
   # Import your i3 and i3status configurations
-  home.file = {
-    ".config/i3/config".source = ./dotfiles/i3config;
-    ".config/i3status/config".source = ./dotfiles/i3statusconfig;
+  xdg.configFile = {
+    "i3/config".source = ./dotfiles/i3config;
+    "i3status/config".source = ./dotfiles/i3statusconfig;
   };
 
   # Enable i3 in Home Manager
