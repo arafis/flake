@@ -1,10 +1,6 @@
 { config, pkgs, ... }:
 
 {
-  imports = [
-    ./hardware.nix
-  ];
-
   # Boot loader configuration
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -40,8 +36,16 @@
         };
       };
       displayManager = {
-        lightdm.enable = true;
         defaultSession = "xfce+i3";
+        lightdm = {
+          enable = true;
+          autoLogin.timeout = 0;
+          greeter.enable = false;
+        };
+        autoLogin = {
+          enable = "true";
+          user = "foxane";
+        };
       };
       xkb = {
         layout = "us";
@@ -72,8 +76,19 @@
   users.users.foxane = {
     isNormalUser = true;
     initialPassword = "123456";
+    homoMode = "775";
     description = "foxane";
-    extraGroups = [ "networkmanager" "wheel" ];
+    shell = pkgs.zsh;
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "libvirtd"
+      "scanner"
+      "lp"
+      "video" 
+      "input" 
+      "audio"
+    ];
   };
 
   environment.systemPackages = with pkgs; [
@@ -84,8 +99,26 @@
   ];
 
   programs = {
-    thunar.enable = true;
     dconf.enable = true;
+    thunar = {
+      enable = true;
+      plugins = with pkgs.xcfe; [
+        thunar-archive-plugin
+        thunar-volman
+      ];
+    };
+    zsh = {
+    	enable = true;
+	  	enableCompletion = true;
+      ohMyZsh = {
+        enable = true;
+        plugins = ["git"];
+        theme = "xiong-chiamiov-plus"; 
+      	};
+      
+      autosuggestions.enable = true;
+      syntaxHighlighting.enable = true;
+    };
   };
 
   security = {
@@ -112,6 +145,24 @@
   hardware = {
     bluetooth.enable = true;
   };
+
+  # Virtualization / Containers
+  virtualisation.libvirtd.enable = false;
+  virtualisation.podman = {
+    enable = false;
+    dockerCompat = false;
+    defaultNetwork.settings.dns_enabled = false;
+  };
+
+  # OpenGL
+  hardware.graphics = {
+    enable = true;
+  };
+
+  # For Electron apps to use wayland
+  # environment.sessionVariables.NIXOS_OZONE_WL = "1";
+
+  console.keyMap = "us";
 
   system.stateVersion = "24.05";
 }

@@ -5,11 +5,14 @@
   home.homeDirectory = "/home/foxane";
 
   home.packages = with pkgs; [
+    xdg-utils
+    vscode-fhs
     brave
     xarchiver
     alacritty
     dmenu
     git
+    gitui
     nerdfonts
     networkmanagerapplet
     nitrogen
@@ -20,6 +23,7 @@
     unrar
     unzip
     gh
+    fastfetch
   ];
 
   # Import your i3 and i3status configurations
@@ -30,9 +34,11 @@
     "i3status/config" = lib.mkForce {
       source = ./dotfiles/i3statusconfig;
     };
-    "rofi/config.rasi" = lib.mkForce {
-      source = ./dotfiles/rofi;
-    };
+  };
+  home.file.fastfetch = {
+    recursive = true;
+    source = ./dotfiles/fastfetch;
+    target = .config/fasfetch;
   };
 
   # Git Gud
@@ -40,20 +46,10 @@
     enable = true;
     userName = "foxane";
     userEmail = "65512187+foxane@users.noreply.github.com";
-    extraConfig = ''
-      # Set the default branch name for new repositories
-      [init]
-        defaultBranch = main
-
-      # Additional Git configurations
-      [core]
-        editor = nano
-      [alias]
-        co = checkout
-        br = branch
-        ci = commit
-        st = status
-    '';
+    config = {
+      init.defaultBranch = "main";
+      core.editor = "nano";
+    };
   };
 
   # Enable i3 in Home Manager
